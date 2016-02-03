@@ -35,9 +35,11 @@ edward()
 case "$1" in
   mo|mount)
   dollar mo
+  edward mo
     ;;
   umo|umount)
   dollar umo
+  edward umo
     ;;
   *)
     echo $"Usage: $0 {mo | umo}"
