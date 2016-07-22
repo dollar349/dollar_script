@@ -1,5 +1,5 @@
 #!/bin/sh
-MIRRO_SERVER="10.162.248.66:/sys_home/space_for_http_server"
+MIRRO_SERVER="10.162.243.192:/sys_home/space_for_http_server"
 MOUNT_FOLDER="tmp_mo"
 NEWFILE_FOLDER="new_files"
 if [[ $1 != "" ]]; then
@@ -12,7 +12,7 @@ xargs -i cp -raf $1/{} ${NEWFILE_FOLDER}/.
 sudo umount ${MOUNT_FOLDER} && rm -rf ${MOUNT_FOLDER}
 echo "done"
 echo "if check ${NEWFILE_FOLDER} ok, issue command:"
-echo "scp ${NEWFILE_FOLDER}/* dollar@10.162.248.66:/sys_home/space_for_http_server/."
+echo "scp ${NEWFILE_FOLDER}/* dollar@10.162.243.192:/sys_home/space_for_http_server/."
 else
 echo Please enter your downloads folder !!!
 fi

@@ -1,6 +1,7 @@
 #!/bin/sh
 #DATA=`date -u +%m%d`
 #FOLDER_NAME="Z_WORK_"$DATA
+export PATH=$PATH:/home/dollar/.dollar_script
 
 DAILY_DATE=`date +%Y_%m_%d`
 WEB_SERVER=/sys_home/space_for_http_server/icomcms-image/
