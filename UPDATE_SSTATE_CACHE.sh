@@ -5,6 +5,7 @@ BACKUP_NAME="sstate-cache_"$DATA
     component_name=`ls ../meta-icom-cms/recipes-backend/ ; ls ../meta-icom-cms/recipes-icom-cms-ui/ ; ls ../meta-icom-cms/recipes-support/ ; ls ../meta-icom-cms/recipes-patches/ ; ls ../meta-icom-cms/recipes-cloudclient`
     component_name+=" rpm-native"    
     component_name+=" luajit-native"
+    component_name+=" luajit-openresty-native"
 echo "=======> Generate sstate-cache.tgz "
     if [ ! -f pattern.log ];then
         touch pattern.log
