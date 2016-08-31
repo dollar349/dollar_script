@@ -1,10 +1,11 @@
 #/bin/sh
 Link_list="src"
 Link_list+=" meta-icom-cms"
+Link_list+=" meta-avct-browser"
 
 for Link in ${Link_list};
 do
-    rm $Link
+    rm -rf $Link
     ln -s $1/$Link $Link 
 done
 
