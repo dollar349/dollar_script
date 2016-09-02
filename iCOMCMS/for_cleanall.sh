@@ -1,5 +1,5 @@
 #/bin/sh
-REBUILD_LIST="luajit-native rpm-native openssh openresty redis jansson openrestyluajit lua-resty-http lapis lua-resty-random redfishschema lua-cmsgpack md5 "
+REBUILD_LIST="luajit-openresty-native rpm-native openssh openresty redis jansson openrestyluajit lua-resty-http lapis lua-resty-random redfishschema lua-cmsgpack md5 "
 REBUILD_LIST+="stingray libevent ssi cloudclient "
 REBUILD_LIST+="accountlib "
 REBUILD_LIST+="asmlib tzdata "
