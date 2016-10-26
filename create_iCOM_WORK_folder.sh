@@ -16,6 +16,7 @@ sed -i '/^LOCAL_MIRROR/s/?=.*/= \"http:\/\/10.162.243.192\/oe-mirror\/\"/' build
 sed -i '/^dhcp-range=/s/dhcp-range/#dhcp-range/' meta-openembedded/meta-networking/recipes-support/dnsmasq/files/dnsmasq.conf 
 cp -raf ~/.dollar_script/iCOMCMS/POINT.sh .
 cp -raf ~/.dollar_script/iCOMCMS/for_cleanall.sh build/.
+cp -raf ~/.dollar_script/iCOMCMS/Compile_for_icom.sh build/.
 else 
 echo "Please enter folder name"
 fi
