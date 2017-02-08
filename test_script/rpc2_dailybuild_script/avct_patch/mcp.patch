@@ -1,0 +1,29 @@
+Index: 0506/sources/enp-mcp/files/mcpd
+===================================================================
+--- 0506.orig/sources/enp-mcp/files/mcpd	2015-05-06 14:52:24.000000000 +0800
++++ 0506/sources/enp-mcp/files/mcpd	2015-05-20 15:31:48.538876451 +0800
+@@ -81,7 +81,7 @@
+ 
+         if [[ "x" == "x${mcpPid}" ]] ; then
+             echo "Starting: ${MCP_APP_NAME}"
+-            start-stop-daemon -S -b -x ${MCP_APP} -- ${MCP_ARGUMENTS}
++            ${MCP_APP} ${MCP_ARGUMENTS} &
+         else
+             echo "${MCP_APP_NAME}: already running"
+         fi
+@@ -109,13 +109,13 @@
+ 
+             if [[ $? == 0 ]] ; then
+                 echo "Restarting: ${MCP_APP_NAME}"
+-                start-stop-daemon -S -b -x ${MCP_APP} -- ${MCP_ARGUMENTS}
++                ${MCP_APP} ${MCP_ARGUMENTS} &
+             else
+                 echo "Not restarting ${MCP_APP_NAME}."
+             fi
+         else
+             echo "Starting: ${MCP_APP_NAME}"
+-            start-stop-daemon -S -b -x ${MCP_APP} -- ${MCP_ARGUMENTS}
++            ${MCP_APP} ${MCP_ARGUMENTS} &
+         fi
+         ;;
+ 

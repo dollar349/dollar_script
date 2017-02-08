@@ -1,0 +1,13 @@
+Index: rpc2k_lima/sources/enp-cfgserver/files/ini/protocols.ini
+===================================================================
+--- rpc2k_lima.orig/sources/enp-cfgserver/files/ini/protocols.ini	2017-01-13 11:19:27.000000000 +0800
++++ rpc2k_lima/sources/enp-cfgserver/files/ini/protocols.ini	2017-01-13 11:21:03.796168000 +0800
+@@ -2,7 +2,7 @@
+ SnmpEnable=ENABLED
+ WSEnable=ENABLED
+ VelocityEnable=ENABLED
+-TelnetEnable=DISABLED
++TelnetEnable=ENABLED
+ SSHEnable=ENABLED
+ FTPEnable=ENABLED
+ IdleTimeOut=300

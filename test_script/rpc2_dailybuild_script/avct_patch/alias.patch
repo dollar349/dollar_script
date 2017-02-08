@@ -1,0 +1,12 @@
+Index: 0506/common/com.avocent.dev/packages/extra-rootfs/files/unity/profile
+===================================================================
+--- 0506.orig/common/com.avocent.dev/packages/extra-rootfs/files/unity/profile	2015-05-20 11:27:12.000000000 +0800
++++ 0506/common/com.avocent.dev/packages/extra-rootfs/files/unity/profile	2015-05-20 15:14:47.694979108 +0800
+@@ -7,6 +7,7 @@
+ 
+ alias rm='rm -i'
+ alias w='w -u'
++alias ll='ls -l --color=auto'
+ 
+ ulimit -c 0
+ if [ "`id -gn`" = "`id -un`" -a "`id -u`" -gt 14 ]; then
