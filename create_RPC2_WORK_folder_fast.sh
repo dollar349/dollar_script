@@ -6,10 +6,11 @@ CACHEFOLDER="$LOCALPWD/_rpc2_monitoring"
 if [[ $1 != "" ]]; then
 FOLDER_NAME=$1
 echo "copy ${CACHEFOLDER} to $FOLDER_NAME"
-cp -raf ${CACHEFOLDER} ${LOCALPWD}/$1 && cd ${LOCALPWD}/$1 && git pull
+cp -raf ${CACHEFOLDER} ${LOCALPWD}/$1 && cd ${LOCALPWD}/$1 
 if [[ $2 != "" ]]; then
     git checkout $2
 fi
+git pull
 ./getlayers.sh
 cp -raf ~/.dollar_script/RPC2/POINT.sh .
 cp -raf ~/.dollar_script/RPC2/for_cleanall.sh .
