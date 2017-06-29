@@ -9,3 +9,5 @@ git config --global push.default current
 git config --global alias.ck checkout
 git config --global alias.br branch
 git config --global alias.cm commit
+#git config --global http.sslverify false
+
