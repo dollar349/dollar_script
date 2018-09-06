@@ -1,5 +1,6 @@
 #!/bin/sh
-T_NAME=/home/${USER}/trash/
+T_NAME="~/trash/"
+eval T_NAME=${T_NAME}
 LOG_NAME=${T_NAME}/`date -u +%Y%m%d-%H%M%S`-$RANDOM
 mkdir -p ${T_NAME}
 echo "Move $* to ${LOG_NAME}"
