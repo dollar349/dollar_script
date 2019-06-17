@@ -10,5 +10,5 @@ git config --global alias.ck checkout
 git config --global alias.br branch
 git config --global alias.cm commit
 #git config --global http.sslverify false
-#git config --global url."https://".insteadOf git://
+git config --global url."https://".insteadOf git://
 
