@@ -1,5 +1,5 @@
 #!/bin/sh
-MIRRO_SERVER="10.162.243.192:/sys_home/space_for_http_server/obmcV2.3"
+MIRRO_SERVER="10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.6.0"
 MOUNT_FOLDER="tmp_mo"
 NEWFILE_FOLDER="new_files"
 if [[ $1 != "" ]]; then
@@ -13,7 +13,7 @@ sudo umount ${MOUNT_FOLDER} && rm -rf ${MOUNT_FOLDER}
 cd ${NEWFILE_FOLDER} && rm -rf *Avocent* && rm -rf *vertivco* && rm -rf edm* && rm -rf Stingray*
 echo "done"
 echo "if check ${NEWFILE_FOLDER} ok, issue command:"
-echo "scp ${NEWFILE_FOLDER}/* dollar@10.162.243.192:/sys_home/space_for_http_server/obmcV2.3/."
+echo "scp ${NEWFILE_FOLDER}/* dollar@${MIRRO_SERVER}/."
 else
 echo Please enter your downloads folder !!!
 fi

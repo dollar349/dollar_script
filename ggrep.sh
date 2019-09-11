@@ -1,4 +1,4 @@
 #!/bin/sh
-find . -type f -name "*" | grep -v ".svn" | xargs grep -Hn "$1" --color
-
+#find . -type f -name "*" | grep -v ".svn" | xargs grep -Hn "$1" --color
+grep -Hnr "$1" --color . 
 exit 0
