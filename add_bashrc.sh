@@ -12,9 +12,9 @@ echo "PATH=\$PATH:$ADD_PATH" >> $BASHRC
 
 if [[ -e ${GITPROMPT} ]]; then
     echo "source /etc/bash_completion.d/git-prompt" >> $BASHRC
-    echo PS1="\[\e[01;32m\][\T]\[\033[35m\][\w]\[\033[36m\]\$(__git_ps1)\n\[\033[1;33m\]\u~[\h]$ \[\033[0m\]" >> $BASHRC
+    echo 'PS1="\[\e[01;32m\][\T]\[\033[35m\][\w]\[\033[36m\]\$(__git_ps1)\n\[\033[1;33m\]\u~[\h]$ \[\033[0m\]"' >> $BASHRC
 else
-    echo PS1="\[\e[01;32m\][\T]\[\033[35m\][\w]\[\033[36m\] \n\[\033[1;33m\]\u~[\h]$ \[\033[0m\]" >> $BASHRC
+    echo 'PS1="\[\e[01;32m\][\T]\[\033[35m\][\w]\[\033[36m\] \n\[\033[1;33m\]\u~[\h]$ \[\033[0m\]"' >> $BASHRC
 fi
 
 
