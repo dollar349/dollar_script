@@ -1,7 +1,23 @@
 #!/bin/sh
-MIRRO_SERVER="10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.6.0"
+#MIRRO_SERVER="10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.7.0"
+SERVER_LIST=("10.162.243.220:/var/www/html/oe-mirror/xilinx-yocto" \
+              "10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.7.0" \
+              )
 MOUNT_FOLDER="tmp_mo"
 NEWFILE_FOLDER="new_files"
+
+select opt in "${SERVER_LIST[@]}"
+do
+    MIRRO_SERVER=$opt
+  
+    if [[ $opt == "" ]]; then
+       echo "bye bye!"
+       continue;
+    fi
+    break;
+done
+echo "MIRRO_SERVER = $MIRRO_SERVER"
+
 if [[ $1 != "" ]]; then
 mkdir -p ${MOUNT_FOLDER}
 mkdir -p ${NEWFILE_FOLDER}
