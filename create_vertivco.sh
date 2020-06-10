@@ -60,6 +60,17 @@ if [[ $# -gt ${optarg} ]]; then
     else
         git clone ${REPO_URL} ${FOLDER_NAME} 
     fi
+    ## if folder name includes platform name execute getlayer.sh
+    cd ${FOLDER_NAME}
+    PLATFORM_SUPPORT_LIST=$(find ${CP_SSTATECACHE_PATH} -maxdepth 1 -type d -name "build-*" | awk -F 'build-' '{print $NF}' | tr '\n' ' ')
+    for platform in ${PLATFORM_SUPPORT_LIST}
+    do
+        if test "${FOLDER_NAME#*${platform}}" != "${FOLDER_NAME}" ; then
+            ./getlayers.sh ${platform}
+			break
+        fi
+    done
+    cd --
 else 
     echo "Please enter folder name"
 fi
