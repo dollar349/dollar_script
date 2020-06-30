@@ -49,7 +49,8 @@ while getopts 'b:o:r:[hH]' OPT; do
     esac
 done
 
-REPO_URL="git@github.com:${ORG}/${REPO}.git"
+REPO_URL="https://github.com/${ORG}/${REPO}.git"
+#REPO_URL="git@github.com:${ORG}/${REPO}.git"
 
 if [[ $# -gt ${optarg} ]]; then
     FOLDER_NAME="${@: -1}"
