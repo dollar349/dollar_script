@@ -64,13 +64,19 @@ if [[ $# -gt ${optarg} ]]; then
     ## if folder name includes platform name execute getlayer.sh
     cd ${FOLDER_NAME}
     PLATFORM_SUPPORT_LIST=$(find ${CP_SSTATECACHE_PATH} -maxdepth 1 -type d -name "build-*" | awk -F 'build-' '{print $NF}' | tr '\n' ' ')
-    for platform in ${PLATFORM_SUPPORT_LIST}
-    do
-        if test "${FOLDER_NAME#*${platform}}" != "${FOLDER_NAME}" ; then
-            ./getlayers.sh ${platform}
-			break
-        fi
-    done
+    Platform=`echo ${FOLDER_NAME} | awk -F '_' '{print $NF}'`
+    if test "${PLATFORM_SUPPORT_LIST#*${Platform}}" != "${PLATFORM_SUPPORT_LIST}" ; then
+        ./getlayers.sh ${Platform}
+    fi
+
+
+    #for platform in ${PLATFORM_SUPPORT_LIST}
+    #do
+    #    if test "${FOLDER_NAME#*${platform}}" != "${FOLDER_NAME}" ; then
+    #        ./getlayers.sh ${platform}
+    #			break
+    #    fi
+    #done
     cd --
 else 
     echo "Please enter folder name"
