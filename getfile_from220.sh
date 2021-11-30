@@ -1,0 +1,7 @@
+#!/bin/bash
+SERVER_IP=10.162.243.220
+eval REMOTE_FILE=$1
+eval LOCAL_FILE=$2
+
+echo dollar@${SERVER_IP}:${REMOTE_FILE} ${LOCAL_FILE}
+scp -r dollar@${SERVER_IP}:${REMOTE_FILE} ${LOCAL_FILE}
