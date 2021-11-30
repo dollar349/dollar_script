@@ -2,7 +2,8 @@
 #MIRRO_SERVER="10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.7.0"
 SERVER_LIST=("10.162.243.220:/var/www/html/oe-mirror/xilinx-yocto" \
               "10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.7.0" \
-              "10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.7.0_yocto3.1"
+              "10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.7.0_yocto3.1" \
+              "10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.9.0"
               )
 MOUNT_FOLDER="tmp_mo"
 NEWFILE_FOLDER="new_files"
