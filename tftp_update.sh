@@ -99,7 +99,7 @@ TaskService=`echo ${TaskService} | tr -d '"'`
 echo "TaskService = ${TaskService}"
 re='^[0-9]+$'
 while
-    sleep 1
+    sleep 3
     Progress=`curl -k -s -u ${user}:${PASSWD} https://${IP}:${PORT}${TaskService} | jq .PercentComplete`
     echo "Progress = ${Progress}"
     [[ ${Progress} =~ $re ]]
