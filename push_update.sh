@@ -86,7 +86,7 @@ sleep 1
 if [ ${FACTORY_RESET} = "Y" ];then
     echo "Firmware update with reset to default..."
     data='{"Oem": {"Vertiv": {"ResetToDefaults": true}}}'
-    curl -k -i -X PATCH -u ${user}:${PASSWD} -H "Content-Type:application/json" -d "$data" "HTTPS://${IP}:${PORT}/redfish/v1/UpdateService"
+    curl -k -s -X PATCH -u ${user}:${PASSWD} -H "Content-Type:application/json" -d "$data" "HTTPS://${IP}:${PORT}/redfish/v1/UpdateService"
 fi
 
 # Start firmware update
