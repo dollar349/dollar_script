@@ -13,6 +13,7 @@ print_help()
     echo ""
     echo "This script helps to run push firmware update"
     echo "  Usage: $(basename $0) -I \${target IP} -P \${PASSWORD} -i \${image(xxx.static.mtd.tar)} [options] ..."
+    echo "  Example: ./$(basename $0) -I 10.162.247.34 -P 1 -i tmp/deploy/images/ipsl-ast2600/obmc-phosphor-image-ipsl-ast2600.static.mtd.tar"
     echo "  option: "
     echo "    -U [USER]"
     echo "        admin as by default"

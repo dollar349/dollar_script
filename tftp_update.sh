@@ -13,6 +13,7 @@ print_help()
     echo ""
     echo "This script helps to run simple firmware update (TFTP)"
     echo "  Usage: $(basename $0) -I \${target IP} -P \${PASSWORD} -i \${TFTP's image path} [options] ..."
+    echo "  Example: ./$(basename $0) -I 10.162.247.34 -P 1 -i 10.162.243.220/dollar/obmc-phosphor-image-ipsl-ast2600.static.mtd.tar"
     echo "  option: "
     echo "    -U [USER]"
     echo "        admin as by default"
