@@ -1,5 +1,10 @@
 #!/bin/sh
 
+
+t1=$(date +"%s")
+t2=$(date +"%s")
+Time=`expr $t2 - $t1`
+
 time=$1
 m=`expr $time / 60`
 s=`expr $time % 60`
