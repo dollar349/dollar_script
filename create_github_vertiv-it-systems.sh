@@ -5,6 +5,20 @@ BRANCH=""
 SCRIPT_NAME=${0##*/} 
 REPO=$(echo ${SCRIPT_NAME} | sed 's/^.*_//g' | sed 's/\.sh$//g' )
 
+if [ "`readlink ${SCRIPT_NAME}`" == "" ];then
+    # Run this script without softlink
+    # Help to create a soft link.
+    ABSPATH=$(readlink -f "$BASH_SOURCE")
+    SCRIPTPATH=$(dirname "$ABSPATH")
+    # echo ${SCRIPTPATH}/${SCRIPT_NAME}
+    if [ $# = 1 ];then
+        ln -s ${SCRIPTPATH}/${SCRIPT_NAME} create_$1.sh
+    else
+        echo "Please give a repository name!"
+        exit 1
+    fi
+    exit 0
+fi
 
 # Print help.
 print_help()
