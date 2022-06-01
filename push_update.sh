@@ -8,6 +8,7 @@ image=""
 IP=""
 user="admin"
 FACTORY_RESET="N"
+OLD_DESIGN="N"
 print_help()
 {
     echo ""
@@ -22,7 +23,7 @@ print_help()
     echo "    -r"
     echo "        reset to default"
 }
-while getopts 'I:P:i:U:rAh' OPT; do
+while getopts 'I:P:i:U:rAho' OPT; do
     case $OPT in
         I)
             IP=$OPTARG
@@ -46,6 +47,9 @@ while getopts 'I:P:i:U:rAh' OPT; do
             print_help
             exit 0
             ;;
+        o)
+            OLD_DESIGN="y"
+            ;;
         ?)
             print_help
             exit 1
@@ -68,7 +72,7 @@ if [ "${image}" = "" ];then
     exit 1
 fi
 
-
+if [ "${OLD_DESIGN}" = "N" ];then
 #echo "curl -ks -u "${user}:${PASSWD}" HTTPS://${IP}:${PORT}/redfish/v1/UpdateService/FirmwareInventory/${RESOURCE_ID}"
 TARGET=`curl -ks -u "${user}:${PASSWD}" HTTPS://${IP}:${PORT}/redfish/v1/UpdateService/FirmwareInventory/${RESOURCE_ID} | jq '.RelatedItem[]."@odata.id"'`
 
@@ -81,7 +85,7 @@ echo "update targe : ${TARGET}"
 # Set update target 
 curl -k -s -X PATCH -u "${user}:${PASSWD}" -H "Content-Type:application/json" -d "{\"HttpPushUriTargets\":[${TARGET}],\"HttpPushUriTargetsBusy\":true}" "https://${IP}:${PORT}/redfish/v1/UpdateService"
 sleep 1
-
+fi
 # Factory reset ?
 if [ ${FACTORY_RESET} = "Y" ];then
     echo "Firmware update with reset to default..."
