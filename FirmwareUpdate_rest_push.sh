@@ -14,32 +14,20 @@ if test ! -f ${SCRIPTPATH}/push_update.sh; then
     exit 1
 fi
 
-# Find Project real path (PRJ_PATH)
-CPWD=`pwd`
-while [ "${CPWD}" != '/' ];
-do
-    if test -f ${TARGET_FILE}; then
-        PRJ_PATH=`pwd`
-        break;
-    fi
-    cd ..
-    CPWD=`pwd`  
-done
+if test ! -f ${SCRIPTPATH}/_GET_PROJECT_INFO.sh; then
+    echo "_GET_PROJECT_INFO.sh not found"
+    exit 1
+fi
 
-# Find Build folder real path (BUILD_PATH)
-_MACHINE=`cat ${PRJ_PATH}/${VERTIV_MACHINE_FILE}`
-BUILD_PATH="${PRJ_PATH}/build-${_MACHINE}"
-
-# Find machine name
-CONF_FILE="${BUILD_PATH}/conf/local.conf"
-MACHINE_NAME=`grep ^MACHINE ${CONF_FILE} | awk -F '=' '{print $NF}' | sed 's/^[ \t]*//g' | sed 's/^"*//g' | sed 's/"*$//g'`
-
-# Set image path
-IMAGE="${BUILD_PATH}/tmp/deploy/images/${MACHINE_NAME}/obmc-phosphor-image-${MACHINE_NAME}.static.mtd.tar"
+source ${SCRIPTPATH}/_GET_PROJECT_INFO.sh
+if test "${PRJ_INFO}" != "OK" ; then
+    echo "Project path not found"
+    exit 1
+fi
 
 # Check image exist
-if test ! -f ${IMAGE}; then
-    echo "${IMAGE} not found"
+if test ! -f ${PRJ_IMAGE}; then
+    echo "${PRJ_IMAGE} not found"
     exit 1
 fi
 
@@ -47,7 +35,7 @@ print_help()
 {
     echo ""
     echo "This script helps to run push_update.sh (update this project's output image)"
-    echo "Image will use : ${IMAGE}"
+    echo "Image will use : ${PRJ_IMAGE}"
     echo "  Usage: $(basename $0) -I \${target IP} -P \${PASSWORD} [options] ..."
     echo "  Example: ./$(basename $0) -I 10.162.247.34 -P 1"
     echo "  option: "
@@ -101,4 +89,4 @@ if [ "${PASSWD}" = "" ];then
 fi
 
 # Execute push_update.sh
-${SCRIPTPATH}/push_update.sh -i ${IMAGE} -P ${PASSWD} -I ${IP} ${EXTRA_OPTION}
+${SCRIPTPATH}/push_update.sh -i ${PRJ_IMAGE} -P ${PASSWD} -I ${IP} ${EXTRA_OPTION}

@@ -11,6 +11,10 @@ if test "${PRJ_INFO}" != "OK" ; then
     echo "Project path not found"
     exit 1
 fi
+
+NEW_VERSION="dev-"`date +%Y%m%d.%H%M`
+sed -i "s/COBRA_VERSION =.*/COBRA_VERSION = \"${NEW_VERSION}\"/" ${PRJ_LOCAL_CONF}
+echo "New COBRA_VERSION is ${NEW_VERSION}"
 CURRENT_PWD=`pwd`
 cd ${PRJ_BUILD_PATH}
 bitbake obmc-phosphor-image
