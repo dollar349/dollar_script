@@ -60,7 +60,7 @@ case ${PRJ_MACHINE} in
     FWU_IMAGE_NAME=ipuhd_${TAG_NAME}.static.mtd.tar
     LICENSE_FILE=foss-IPUHD-${TAG_NAME}-license.manifest
  ;;
-	"ast2600-evb")
+	"cobra-ast2600evb")
     FWU_IMAGE_NAME=ipfhd_${TAG_NAME}.static.mtd.tar
  ;;
  	"ipsl-ast2600")
