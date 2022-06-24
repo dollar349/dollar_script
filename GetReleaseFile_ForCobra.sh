@@ -64,9 +64,14 @@ case ${PRJ_MACHINE} in
     FWU_IMAGE_NAME=ipfhd_${TAG_NAME}.static.mtd.tar
  ;;
  	"ipsl-ast2600")
-	IMAGE_NAME=ipsl-ast2600-image-${TAG_NAME}
-    FWU_IMAGE_NAME=ipsl_${TAG_NAME}.static.mtd.tar
-    LICENSE_FILE=foss-IPSL-${TAG_NAME}-license.manifest
+    IPSL-AST2600-QEMU=`cat ${PRJ_LOCAL_CONF} | grep COBRA_QEMU | awk -F "[\"\"]" '{print $2}'`
+    if test "${IPSL-AST2600-QEMU}" = "true";then
+        FWU_IMAGE_NAME=qemu_ipsl_${TAG_NAME}.static.mtd.tar
+    else
+        IMAGE_NAME=ipsl-ast2600-image-${TAG_NAME}
+        FWU_IMAGE_NAME=ipsl_${TAG_NAME}.static.mtd.tar
+        LICENSE_FILE=foss-IPSL-${TAG_NAME}-license.manifest
+    fi
  ;;
     *)
     echo "PRJ_MACHINE = ${PRJ_MACHINE} not supported"
