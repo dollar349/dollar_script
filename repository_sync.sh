@@ -9,6 +9,8 @@ ORG_ARRAY[blueplate-dev]="ETA"
 ORG_ARRAY[blueplate-redfish]="ETA"
 ORG_ARRAY[serial-over-websocket]="ETA"
 ORG_ARRAY[obmc-console]="FOSS"
+ORG_ARRAY[BluePlate]="ETA"
+ORG_ARRAY[blueplate-redfish-advanced]="ETA"
 
 #ORG_ARRAY=([meta-blueplate-apps]="ETA" \
 #           [meta-blueplate-platform]="ETA" \
