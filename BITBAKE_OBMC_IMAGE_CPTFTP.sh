@@ -11,7 +11,13 @@ if test "${PRJ_INFO}" != "OK" ; then
     echo "Project path not found"
     exit 1
 fi
+
 CURRENT_PWD=`pwd`
 cd ${PRJ_BUILD_PATH}
-bitbake obmc-phosphor-image && rm -rf /tftpboot/${USER}/image-* && cp tmp/deploy/images/*/image-* /tftpboot/${USER}/.
+if test "$1" = "-o"; then
+# -o only copy image to /tftpboot/
+    cp tmp/deploy/images/*/image-* /tftpboot/${USER}/.
+else
+    bitbake obmc-phosphor-image && rm -rf /tftpboot/${USER}/image-* && cp tmp/deploy/images/*/image-* /tftpboot/${USER}/.
+fi
 cd ${CURRENT_PWD}
