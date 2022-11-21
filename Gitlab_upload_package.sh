@@ -121,3 +121,6 @@ fi
 getVertivAccessToken
 
 curl --header "PRIVATE-TOKEN:${ACCESS_TOKEN}" --upload-file ${UPLOAD_FILE} "${API_V4_URL}/projects/${REPO_ID}/packages/generic/${PACKAGE_NAME}/${PACKAGE_VERSION}/${UPLOAD_FILE_NAME}"
+if [ $? -eq 0 ]; then
+    echo "Download URL is: ${API_V4_URL}/projects/${REPO_ID}/packages/generic/${PACKAGE_NAME}/${PACKAGE_VERSION}/${UPLOAD_FILE_NAME}"
+fi
