@@ -73,18 +73,18 @@ if [ "${image}" = "" ];then
 fi
 
 if [ "${OLD_DESIGN}" = "N" ];then
-#echo "curl -ks -u "${user}:${PASSWD}" HTTPS://${IP}:${PORT}/redfish/v1/UpdateService/FirmwareInventory/${RESOURCE_ID}"
-TARGET=`curl -ks -u "${user}:${PASSWD}" HTTPS://${IP}:${PORT}/redfish/v1/UpdateService/FirmwareInventory/${RESOURCE_ID} | jq '.RelatedItem[]."@odata.id"'`
+    #echo "curl -ks -u "${user}:${PASSWD}" HTTPS://${IP}:${PORT}/redfish/v1/UpdateService/FirmwareInventory/${RESOURCE_ID}"
+    TARGET=`curl -ks -u "${user}:${PASSWD}" HTTPS://${IP}:${PORT}/redfish/v1/UpdateService/FirmwareInventory/${RESOURCE_ID} | jq '.RelatedItem[]."@odata.id"'`
 
-if [ "${TARGET}" = "" ];then
-    echo "Get update TARGET failed"
-    exit 1
-fi
-echo "update targe : ${TARGET}"
+    if [ "${TARGET}" = "" ];then
+        echo "Get update TARGET failed"
+        exit 1
+    fi
+    echo "update targe : ${TARGET}"
 
-# Set update target 
-curl -k -s -X PATCH -u "${user}:${PASSWD}" -H "Content-Type:application/json" -d "{\"HttpPushUriTargets\":[${TARGET}],\"HttpPushUriTargetsBusy\":true}" "https://${IP}:${PORT}/redfish/v1/UpdateService"
-sleep 1
+    # Set update target 
+    curl -k -s -X PATCH -u "${user}:${PASSWD}" -H "Content-Type:application/json" -d "{\"HttpPushUriTargets\":[${TARGET}],\"HttpPushUriTargetsBusy\":true}" "https://${IP}:${PORT}/redfish/v1/UpdateService"
+    sleep 1
 fi
 # Factory reset ?
 if [ ${FACTORY_RESET} = "Y" ];then
