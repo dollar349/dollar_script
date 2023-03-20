@@ -6,9 +6,9 @@ EXTRA_OPTION=""
 
 VERTIV_MACHINE_FILE=".MACHINE"
 
-# Check push_update.sh script exist
-if test ! -f ${SCRIPTPATH}/push_update.sh; then
-    echo "push_update.sh not found"
+# Check tftp_update.sh script exist
+if test ! -f ${SCRIPTPATH}/tftp_update.sh; then
+    echo "tftp_update.sh not found"
     exit 1
 fi
 
@@ -32,7 +32,7 @@ fi
 print_help()
 {
     echo ""
-    echo "This script helps to run push_update.sh (update this project's output image)"
+    echo "This script helps to run tftp_update.sh (copid this project's image to /tftpboot/\${USER})"
     echo "Image will use : ${PRJ_IMAGE}"
     echo "  Usage: $(basename $0) -I \${target IP} -P \${PASSWORD} [options] ..."
     echo "  Example: ./$(basename $0) -I 10.162.247.34 -P 1"
@@ -86,5 +86,23 @@ if [ "${PASSWD}" = "" ];then
     exit 1
 fi
 
+TFTP_SERVER_IP=$(ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}')
+if [ "${TFTP_SERVER_IP}" = "" ];then
+    echo "Cannot get server IP!"
+    echo "Cmd: \"ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}'\""
+    exit 1
+fi
+
+mkdir -p /tftpboot/${USER} 2>/dev/null
+if [ $? != "0" ];then
+    echo "Cannot create folder [/tftpboot/${USER}]"
+    exit 1
+fi
+
+# Copy image to /tftpboot
+cp ${PRJ_IMAGE} /tftpboot/${USER}/.
+
+IMAGE_NAME=$(echo ${PRJ_IMAGE} | awk -F '/' '{print $NF}')
+
 # Execute push_update.sh
-${SCRIPTPATH}/push_update.sh -i ${PRJ_IMAGE} -P ${PASSWD} -I ${IP} ${EXTRA_OPTION}
+${SCRIPTPATH}/tftp_update.sh -i ${TFTP_SERVER_IP}/${USER}/${IMAGE_NAME} -P ${PASSWD} -I ${IP} ${EXTRA_OPTION}

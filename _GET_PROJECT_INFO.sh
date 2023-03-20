@@ -52,7 +52,14 @@ if test "${PRJ_INFO}" = "OK" ; then
     export PRJ_BUILD_PATH="${PRJ_PATH}/build-${MACHINE_BUILD_FOLDER}"
     export PRJ_LOCAL_CONF="${PRJ_PATH}/build-${MACHINE_BUILD_FOLDER}/conf/local.conf"
     export PRJ_MACHINE=`grep ^MACHINE ${PRJ_LOCAL_CONF} | awk -F '=' '{print $NF}' | sed 's/^[ \t]*//g' | sed 's/^"*//g' | sed 's/"*$//g'`
-    export PRJ_IMAGE="${PRJ_BUILD_PATH}/tmp/deploy/images/${PRJ_MACHINE}/obmc-phosphor-image-${PRJ_MACHINE}.static.mtd.tar"
     export PRJ_MANIFEST="${PRJ_BUILD_PATH}/tmp/deploy/images/${PRJ_MACHINE}/obmc-phosphor-image-${PRJ_MACHINE}.manifest"
     export PRJ_DEPLOY_IMAGE_PATH="${PRJ_BUILD_PATH}/tmp/deploy/images/${PRJ_MACHINE}"
+    # Get image type (SPI or EMMC)
+    if test "$(ls ${PRJ_DEPLOY_IMAGE_PATH}/*-emmc.wks 2>/dev/null)" = ""; then
+        export PRJ_TIMAGE_TYPE="SPI"
+        export PRJ_IMAGE="${PRJ_BUILD_PATH}/tmp/deploy/images/${PRJ_MACHINE}/obmc-phosphor-image-${PRJ_MACHINE}.static.mtd.tar"
+    else
+        export PRJ_TIMAGE_TYPE="EMMC"
+        export PRJ_IMAGE="${PRJ_BUILD_PATH}/tmp/deploy/images/${PRJ_MACHINE}/obmc-phosphor-image-${PRJ_MACHINE}.ext4.mmc.tar"
+    fi
 fi
