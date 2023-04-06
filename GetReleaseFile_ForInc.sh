@@ -1,6 +1,7 @@
 #!/bin/sh
 ABSPATH=$(readlink -f "$BASH_SOURCE")
 SCRIPTPATH=$(dirname "$ABSPATH")
+
 # Check _GET_PROJECT_INFO.sh script exist
 if test ! -f ${SCRIPTPATH}/_GET_PROJECT_INFO.sh; then
     echo "_GET_PROJECT_INFO.sh not found"
@@ -55,6 +56,11 @@ if test "${TAG_NAME}" = "";then
 fi
 
 case ${PRJ_MACHINE} in
+	"inc")
+	IMAGE_NAME=inc-image-${TAG_NAME}
+    FWU_IMAGE_NAME=inc_${TAG_NAME}.ext4.mmc.tar	
+    #LICENSE_FILE=foss-IPUHD-${TAG_NAME}-license.manifest
+ ;;
 	"inc-ipsl")
 	IMAGE_NAME=inc-ipsl-image-${TAG_NAME}
     FWU_IMAGE_NAME=inc-ipsl_${TAG_NAME}.static.mtd.tar
@@ -79,14 +85,19 @@ fi
 #                                                 #
 ###################################################
 if test "${IMAGE_NAME}" != ""; then
-   rm -rf ${RELEASE_FOLDER}/${IMAGE_NAME}.tar.gz
-   rm -rf ${RELEASE_FOLDER}/${IMAGE_NAME}
-   mkdir ${RELEASE_FOLDER}/${IMAGE_NAME}
-   cp ${PRJ_DEPLOY_IMAGE_PATH}/image-* ${RELEASE_FOLDER}/${IMAGE_NAME}/.
-   rm ${RELEASE_FOLDER}/${IMAGE_NAME}/image-rwfs
-   cd ${RELEASE_FOLDER} && \
-   tar czvf ${IMAGE_NAME}.tar.gz ${IMAGE_NAME} && \
-   cd -
+    if test "${PRJ_TIMAGE_TYPE}" = "EMMC";then
+        rm -rf ${RELEASE_FOLDER}/${IMAGE_NAME}.wic.xz
+        cp ${PRJ_DEPLOY_IMAGE_PATH}/obmc-phosphor-image-inc.wic.xz ${RELEASE_FOLDER}/${IMAGE_NAME}.wic.xz
+    else
+        rm -rf ${RELEASE_FOLDER}/${IMAGE_NAME}.tar.gz
+        rm -rf ${RELEASE_FOLDER}/${IMAGE_NAME}
+        mkdir ${RELEASE_FOLDER}/${IMAGE_NAME}
+        cp ${PRJ_DEPLOY_IMAGE_PATH}/image-* ${RELEASE_FOLDER}/${IMAGE_NAME}/.
+        rm ${RELEASE_FOLDER}/${IMAGE_NAME}/image-rwfs
+        cd ${RELEASE_FOLDER} && \
+        tar czvf ${IMAGE_NAME}.tar.gz ${IMAGE_NAME} && \
+        cd -
+    fi
 fi
 
 ###################################################
