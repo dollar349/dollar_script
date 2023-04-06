@@ -3,6 +3,7 @@
 if [[ "$1" = -[hH] ]];then
   echo "This script will find all local.conf and set the new vrsion to \"INC_VERSION\""
   echo "  Usage: $(basename $0) \${Version that you want}"
+  exit 0
 fi
 
 
