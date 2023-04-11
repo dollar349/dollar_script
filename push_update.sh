@@ -80,7 +80,7 @@ if [ "${OLD_DESIGN}" = "N" ];then
         echo "Get update TARGET failed"
         exit 1
     fi
-    echo "update targe : ${TARGET}"
+    echo "update target : ${TARGET}"
 
     # Set update target 
     curl -k -s -X PATCH -u "${user}:${PASSWD}" -H "Content-Type:application/json" -d "{\"HttpPushUriTargets\":[${TARGET}],\"HttpPushUriTargetsBusy\":true}" "https://${IP}:${PORT}/redfish/v1/UpdateService"
