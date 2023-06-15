@@ -109,7 +109,7 @@ if test "${DAY_SELECT}" = "";then
     # Get the correct date from today's image folder
     IMAGE_DATE=$(curl -s http://${SERVER_IP}/${TFTP_PATH}/ | grep -oE  'image_date_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{4}' | sed 's/image_date_//' | head -1)
     if test "${IMAGE_DATE}" = "";then
-        echo "Get image date failed, so exit"
+        echo "Cannot find any date folder in path [http://${SERVER_IP}/${TFTP_PATH}/], so exit"
         exit 1
     fi
 else
