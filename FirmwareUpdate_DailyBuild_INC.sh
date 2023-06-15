@@ -6,7 +6,8 @@ SERVER_IP="10.162.243.217"
 PRJ_NAME="inc"
 MACHINE=""
 MACHINE_LIST=$(curl -s http://${SERVER_IP}/${PRJ_NAME}/dailybuild/ | grep -oE 'href="([^"]+/)?[^/]+/"' | awk -F\" '{print $2}' | sed 's/\///g')
-
+DAY_SELECT=""
+DEBUG=""
 # Check tftp_update.sh script exist
 if test ! -f ${SCRIPTPATH}/tftp_update.sh; then
     echo "tftp_update.sh not found"
@@ -22,6 +23,8 @@ print_help()
     echo "  option: "
     echo "    -M [Machine]"
     echo "        Give this option will not pop up Machine select menu"
+    echo "    -s "
+    echo "        The default image uses the latest daily-build, this option can select another day"
     echo "    -U [USER]"
     echo "        admin as by default"
     echo "    -A"
@@ -31,10 +34,16 @@ print_help()
     
 }
 
-while getopts 'M:I:P:U:rAho' OPT; do
+while getopts 'M:I:P:U:rAhosd' OPT; do
     case $OPT in
         M)
             MACHINE=$OPTARG
+            ;;
+        d)
+            DEBUG="Y"
+            ;;
+        s)
+            DAY_SELECT="Y"
             ;;
         I)
             IP=$OPTARG
@@ -76,6 +85,7 @@ if test "${PASSWD}" = "" ;then
 fi
 
 if test "${MACHINE}" = "" ;then
+    echo "Please select machine : "
     select opt in ${MACHINE_LIST}
     do
         MACHINE=${opt}
@@ -94,17 +104,32 @@ if test "${MACHINE_LIST#*${MACHINE}}" = "${MACHINE_LIST}" ; then
 fi
 
 TFTP_SERVER_IP=${SERVER_IP}
-TFTP_PATH="${PRJ_NAME}/dailybuild/${MACHINE}/today"
-
-# Get the correct date from today's image folder
-IMAGE_DATE=$(curl -s http://${SERVER_IP}/${TFTP_PATH}/ | grep -oE  'image_date_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{4}' | sed 's/image_date_//' | head -1)
-if test "${IMAGE_DATE}" = "";then
-    echo "Get image date failed, so exit"
-    exit 1
+if test "${DAY_SELECT}" = "";then
+    TFTP_PATH="${PRJ_NAME}/dailybuild/${MACHINE}/today"
+    # Get the correct date from today's image folder
+    IMAGE_DATE=$(curl -s http://${SERVER_IP}/${TFTP_PATH}/ | grep -oE  'image_date_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{4}' | sed 's/image_date_//' | head -1)
+    if test "${IMAGE_DATE}" = "";then
+        echo "Get image date failed, so exit"
+        exit 1
+    fi
+else
+    # Let user select image
+    DAY_LIST=$(curl -s http://${SERVER_IP}/${PRJ_NAME}/dailybuild/${MACHINE}/ | grep -oE 'href="[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{4}' | sed 's/href="//')
+    echo "Please choose which day's image to run firmware udate:"
+    select opt in ${DAY_LIST}
+    do
+        IMAGE_DATE=${opt}
+        if test "${opt}" = "" ; then
+        echo "bye bye!"
+        exit 1
+        continue;
+        fi
+        break;
+    done
+    TFTP_PATH="${PRJ_NAME}/dailybuild/${MACHINE}/${IMAGE_DATE}"
 fi
-
 # Get the correct image name from today's image folder
-IMAGE_NAME=$(curl -s http://${SERVER_IP}/${TFTP_PATH}/ | grep -oE 'obmc-phosphor-image[^"<]+"' | sed 's/"//g')
+IMAGE_NAME=$(curl -s http://${SERVER_IP}/${TFTP_PATH}/ | grep -oE 'obmc-phosphor-image[^"<]+[mmc|mtd].tar"' | sed 's/"//g')
 if test "${IMAGE_NAME}" = "";then
     echo "Get image name failed, so exit"
     exit 1
@@ -118,7 +143,11 @@ echo "##########################################"
 echo "Do you agree? (y/n)"
 read ans
 if test "${ans}" = "y" -o "${ans}" = "Y";then
-    ${SCRIPTPATH}/tftp_update.sh -i ${TFTP_SERVER_IP}/${TFTP_PATH}/${IMAGE_NAME} -P ${PASSWD} -I ${IP} ${EXTRA_OPTION}
+    if test "${DEBUG}" != "";then
+        echo ${SCRIPTPATH}/tftp_update.sh -i ${TFTP_SERVER_IP}/${TFTP_PATH}/${IMAGE_NAME} -P ${PASSWD} -I ${IP} ${EXTRA_OPTION}
+    else
+        ${SCRIPTPATH}/tftp_update.sh -i ${TFTP_SERVER_IP}/${TFTP_PATH}/${IMAGE_NAME} -P ${PASSWD} -I ${IP} ${EXTRA_OPTION}
+    fi
 else
     exit 0
 fi
