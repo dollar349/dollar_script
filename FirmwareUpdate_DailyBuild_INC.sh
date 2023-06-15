@@ -131,7 +131,7 @@ fi
 # Get the correct image name from today's image folder
 IMAGE_NAME=$(curl -s http://${SERVER_IP}/${TFTP_PATH}/ | grep -oE 'obmc-phosphor-image[^"<]+[mmc|mtd].tar"' | sed 's/"//g')
 if test "${IMAGE_NAME}" = "";then
-    echo "Get image name failed, so exit"
+    echo "Cannot find image in path [http://${SERVER_IP}/${TFTP_PATH}/], so exit"
     exit 1
 fi
 
