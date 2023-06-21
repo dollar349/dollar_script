@@ -1,16 +1,16 @@
 #!/bin/sh
+
 API_V4_URL="https://gitlab.com/api/v4"
 
 print_help()
 {
     echo ""
-    echo "This script helps to Upload file to Gitlab Package Registry"
-    echo "Upload package to a Repository. "
+    echo "This script helps to Download file from Gitlab Package Registry"
+    echo "Download package to a Repository. "
     echo " In addition to the Repository ID, you need to specify [Package name]/[Version]/[File name]" 
-    echo "  Usage: $(basename $0) -r \${Repository ID/URL} -p \${Package name} -v \${Version} -f \${Specify an file to upload}"
+    echo "  Usage: $(basename $0) -r \${Repository ID/URL} -p \${Package name} -v \${Version} -f \${file name}"
     echo "  option: "
-    echo "    -F [Specify another name]"
-    echo "        Specify another name in the \"Package Registry\""
+    echo "    -F [Save as another Name]"
 }
 
 
@@ -47,9 +47,6 @@ getVertivAccessToken()
     fi
 }
 
-# Get access token
-getVertivAccessToken
-
 function GetRepoID(){
     if test "${ACCESS_TOKEN}" = "";then
         getVertivAccessToken
@@ -61,7 +58,7 @@ function GetRepoID(){
     echo ${REPO_ID}
 }
 
-UPLOAD_FILE_NAME=""
+DOWNLOAD_FILE_NAME=""
 while getopts 'r:p:v:f:F:h' OPT; do
     case $OPT in
         r)  
@@ -74,10 +71,10 @@ while getopts 'r:p:v:f:F:h' OPT; do
             PACKAGE_VERSION=$OPTARG
             ;;
         f)  
-            UPLOAD_FILE=$OPTARG
+            REMOTE_FILE_NAME=$OPTARG
             ;;
         F)  
-            UPLOAD_FILE_NAME=$OPTARG
+            DOWNLOAD_FILE_NAME=$OPTARG
             ;;
         h)
             print_help
@@ -90,16 +87,7 @@ while getopts 'r:p:v:f:F:h' OPT; do
     esac
 done
 
-if test "${1}" = "getid"; then
-    if test "${2}" = ""; then
-        echo "Please provide the URL of the Repository you want to query"
-    fi
-    REPO_ID=$(GetRepoID ${2})
-    echo "REPO_ID = ${REPO_ID}"
-    exit 0
-fi
-
-if test "${UPLOAD_FILE}" = "" \
+if test "${REMOTE_FILE_NAME}" = "" \
          -o "${PACKAGE_NAME}" = "" \
          -o "${REPO_ID}" = "" \
          -o "${PACKAGE_VERSION}" = "" ; then
@@ -107,8 +95,8 @@ if test "${UPLOAD_FILE}" = "" \
     exit 1
 fi
 
-if test "${UPLOAD_FILE_NAME}" = ""; then
-    UPLOAD_FILE_NAME=$(basename ${UPLOAD_FILE})
+if test "${DOWNLOAD_FILE_NAME}" = "";then
+    DOWNLOAD_FILE_NAME=${REMOTE_FILE_NAME}
 fi
 
 # Get access token
@@ -120,8 +108,5 @@ if ! [[ ${REPO_ID} =~ ${re} ]] ; then
    REPO_ID=$(GetRepoID ${REPO_ID})
 fi
 
-curl --header "PRIVATE-TOKEN:${ACCESS_TOKEN}" --upload-file ${UPLOAD_FILE} "${API_V4_URL}/projects/${REPO_ID}/packages/generic/${PACKAGE_NAME}/${PACKAGE_VERSION}/${UPLOAD_FILE_NAME}"
-if [ $? -eq 0 ]; then
-    echo ""
-    echo "Download URL is: ${API_V4_URL}/projects/${REPO_ID}/packages/generic/${PACKAGE_NAME}/${PACKAGE_VERSION}/${UPLOAD_FILE_NAME}"
-fi
+
+curl -s --header "PRIVATE-TOKEN:${ACCESS_TOKEN}" -o ${DOWNLOAD_FILE_NAME} "${API_V4_URL}/projects/${REPO_ID}/packages/generic/${PACKAGE_NAME}/${PACKAGE_VERSION}/${REMOTE_FILE_NAME}"
