@@ -16,12 +16,15 @@
 #     exit 1
 # fi
 # 
+# echo "PRJ_PATH = ${PRJ_PATH}"
 # echo "PRJ_MACHINE = ${PRJ_MACHINE}"
 # echo "PRJ_BUILD_PATH = ${PRJ_BUILD_PATH}"
 # echo "PRJ_LOCAL_CONF = ${PRJ_LOCAL_CONF}"
 # echo "PRJ_IMAGE = ${PRJ_IMAGE}"
 # echo "PRJ_MANIFEST = ${PRJ_MANIFEST}"
 # echo "PRJ_DEPLOY_IMAGE_PATH = ${PRJ_DEPLOY_IMAGE_PATH}"
+# echo "PRJ_TIMAGE_TYPE = ${PRJ_TIMAGE_TYPE}"  // SPI or EMMC
+# echo "PRJ_REPO_NAME = ${PRJ_REPO_NAME}"
 ################################################################
 CURRENT_PWD=`pwd`
 TARGET_FILE="getlayers.sh"
@@ -48,7 +51,7 @@ else
 fi
 MACHINE_BUILD_FOLDER=`cat ${PRJ_PATH}/${VERTIV_MACHINE_FILE}`
 if test "${PRJ_INFO}" = "OK" ; then
-    # Find Build folder real path (BUILD_PATH)  
+    # Find Build folder real path (BUILD_PATH) 
     export PRJ_BUILD_PATH="${PRJ_PATH}/build-${MACHINE_BUILD_FOLDER}"
     export PRJ_LOCAL_CONF="${PRJ_PATH}/build-${MACHINE_BUILD_FOLDER}/conf/local.conf"
     export PRJ_MACHINE=`grep ^MACHINE ${PRJ_LOCAL_CONF} | awk -F '=' '{print $NF}' | sed 's/^[ \t]*//g' | sed 's/^"*//g' | sed 's/"*$//g'`
@@ -62,4 +65,7 @@ if test "${PRJ_INFO}" = "OK" ; then
         export PRJ_TIMAGE_TYPE="EMMC"
         export PRJ_IMAGE="${PRJ_BUILD_PATH}/tmp/deploy/images/${PRJ_MACHINE}/obmc-phosphor-image-${PRJ_MACHINE}.ext4.mmc.tar"
     fi
+    # Get Project Repository name
+    export PRJ_REPO_NAME="$(git --git-dir=${PRJ_PATH}/.git remote -v | head -n 1 | awk -F '/' '{print $NF}')"
+    PRJ_REPO_NAME=${PRJ_REPO_NAME%.git*}
 fi
