@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 # Author: Scott Chen 
-
+TTY_PREFIX="KM"
 usage()
 {
     echo "Kermit Easy Command (Scott Chen)"
@@ -15,42 +15,21 @@ usage()
     echo "Example:"
     echo "  `basename $0` ttyS0 115200  --> connect to /dev/ttyS0, speed=115200"
     echo "  `basename $0` ttyS0         --> connect to /dev/ttyS0, speed=115200"
-    echo "  `basename $0` ttyUSB1 9600  --> connect to /dev/ttyUSB1, speed=9600"
-    echo "  `basename $0` 2 9600        --> connect to /dev/ttyUSB2, speed=9600"
-    echo "  `basename $0` 2             --> connect to /dev/ttyUSB2, speed=115200"
+    echo "  `basename $0` tty${TTY_PREFIX}1 9600   --> connect to /dev/tty${TTY_PREFIX}1, speed=9600"
+    echo "  `basename $0` 2 9600        --> connect to /dev/tty${TTY_PREFIX}2, speed=9600"
+    echo "  `basename $0` 2             --> connect to /dev/tty${TTY_PREFIX}2, speed=115200"
     echo "  `basename $0` ls            --> show kermit connections and lock files"
-    echo "  `basename $0` -d ttyUSB0    --> terminate connection to /dev/ttyUSB0"
-    echo "  `basename $0` -d 1          --> terminate connection to /dev/ttyUSB1"
+    echo "  `basename $0` -d tty${TTY_PREFIX}0     --> terminate connection to /dev/tty${TTY_PREFIX}0"
+    echo "  `basename $0` -d 1          --> terminate connection to /dev/tty${TTY_PREFIX}1"
     echo "  `basename $0` tell scott hi --> send a message "hi" to scott in all tty"
     echo ""
     exit 
-}
-
-get_platform_name() {
-    output=result.txt
-    tty=/dev/$1
-    cmd1="cat $tty"
-    cmd2="cat /flash/data0/platform_name"
-
-    if [ -f "/var/lock/LCK..$1" ]; then
-        return 
-    fi
-    
-    $cmd1 > $output 2> /dev/null &
-    echo "$cmd2" > $tty
-    sleep 1
-    result=`cat $output | grep -v cat | grep -v ']'`
-    result=`echo $result`
-    kill -9 $! 2>&1 > /dev/null
-    echo "$result"
-    rm -f $output
 }
 
 gen_kermitrc()
 {
     local tty=$1
     local speed=$2
-    #local result=`get_platform_name $tty`
     local result="no"
 
     echo "  # $result "
@@ -81,7 +60,7 @@ kermit_mode()
     fi
     
     if [ "$1" -eq $1 2>/dev/null ]; then
-        tty=ttyUSB$1
+        tty=tty${TTY_PREFIX}$1
     else
         tty=$1
     fi
@@ -114,13 +93,6 @@ list_km_info()
         if [[ $platform = line || $platform = "" ]]; then
            platform='N/A'
         fi
-	    if [[ $platform != 'StarScreamB_SideA' && $platform != 'StarScreamB_SideB' && \
-	          $platform != 'Jetfire_SideA' && $platform != 'Jetfire_SideB' && \
-	          $platform != 'Beachcomber_SideA' && $platform != 'Beachcomber_SideB' && \
-	          $platform != 'Devastator_SideA' && $platform != 'Devastator_SideB' && \
-	          $platform != 'Megatron_SideA' && $platform != 'Megatron_SideB' ]] ; then
-	       platform='N/A'
-	    fi
          printf "%-10s | %-10s | %-10s | km -d %-10s | %-10s \n\r" $ttyname $name $pid $ttyname $platform
     done < $tmpfile
     rm -f $tmpfile 
@@ -139,17 +111,25 @@ delete_mode()
 {
     local key=$2
     if [ "$key" -eq $key 2> /dev/null ]; then
-        key=ttyUSB$2
+        key=tty${TTY_PREFIX}$2
     fi
-    local lockfile="/var/lock/LCK..$key"
-    if [ -f $lockfile ]; then
-        pid=`list_km_info | grep $key | awk -F "|" '{print $3}'`
-        victim=`list_km_info | grep $key | awk -F "|" '{print $2}'`
-        send_messages tell $victim "Your ($key) was stolen"
-        echo -ne "Terminating $key (PID=`echo $pid`)\n\r"
-        sudo kill -9 $pid 2> /dev/null
-        sudo rm -f $lockfile 2> /dev/null
-    fi
+
+    pid=`list_km_info | grep $key | awk -F "|" '{print $3}'`
+    victim=`list_km_info | grep $key | awk -F "|" '{print $2}'`
+    send_messages tell $victim "Your ($key) was stolen"
+    echo -ne "Terminating $key (PID=`echo $pid`)\n\r"
+    sudo kill -9 $pid 2> /dev/null
+    echo "kill PID=$pid"
+
+    for lockfile in /var/lock/LCK..*
+    do
+        pid2=$(cat $lockfile | tr -d " ")
+        if [ $pid = $pid2 ]
+        then
+            sudo rm -f $lockfile 2> /dev/null
+            echo "kill lockfile=$lockfile"
+	fi
+    done
 }
 
 get_available_users()
@@ -241,5 +221,4 @@ case $1 in
         kermit_mode $@
     ;;
 esac
-
 
