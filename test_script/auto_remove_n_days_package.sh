@@ -2,10 +2,9 @@
 
 
 ID=41754391
-KEEP_N_DAYS=0
+KEEP_N_DAYS=20
 KEEP_DATE=$(date +%Y-%m-%d --date="-${KEEP_N_DAYS} day")
 
-UPLOAD_N_DAY=60
 MACHINE_LIST="inc-ast2600evb inc-ipsl inc"
 
 
