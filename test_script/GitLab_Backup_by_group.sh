@@ -1,7 +1,7 @@
 #!/bin/bash
 
-
-GROUP_ID=58948732
+# FOSS
+GROUP_ID=58948775
 BACKUP_LIST="backup_list"
 
 API_V4_URL="https://gitlab.com/api/v4"

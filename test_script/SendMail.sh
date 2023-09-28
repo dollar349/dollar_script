@@ -15,8 +15,6 @@ FTP_PATH="ftp://${LOCALIP}/${PRJ_NAME}"
 
 Keep_N=30
 
-
-
 #=========================
 #Mail list Setting
 #=========================
