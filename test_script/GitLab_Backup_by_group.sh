@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# FOSS
-GROUP_ID=58948775
+GROUP_ID="58948775 58948714"
 BACKUP_LIST="backup_list"
 
 API_V4_URL="https://gitlab.com/api/v4"
@@ -41,13 +40,19 @@ getVertivAccessToken()
 # Get access token
 getVertivAccessToken
 
-curl -s -H "PRIVATE-TOKEN:${ACCESS_TOKEN}" "${API_V4_URL}/groups/${GROUP_ID}/projects" | jq '.[].web_url' >> ${BACKUP_LIST}
-while IFS= read -r line
+for ID in ${GROUP_ID}
 do
-    if test "${line}" != "";then
-        
-        REPO_URL=$(echo ${line} | tr -d '"')
-        git clone --bare ${REPO_URL}
-        #echo  ${REPO_URL}
-    fi
-done < ${BACKUP_LIST}
+    GROUPNAME=$(curl -s -H "PRIVATE-TOKEN:${ACCESS_TOKEN}" "${API_V4_URL}/groups/${ID}" | jq '.name' | tr -d '"')
+    echo "Start clone GROUP [${GROUPNAME}]"
+    mkdir ${GROUPNAME} && cd ${GROUPNAME}
+    curl -s -H "PRIVATE-TOKEN:${ACCESS_TOKEN}" "${API_V4_URL}/groups/${ID}/projects" | jq '.[].web_url' >> ${BACKUP_LIST}
+    while IFS= read -r line
+    do
+        if test "${line}" != "";then
+            REPO_URL=$(echo ${line} | tr -d '"')
+            git clone --bare ${REPO_URL}
+            #echo  ${REPO_URL}
+        fi
+    done < ${BACKUP_LIST}
+    cd -
+done

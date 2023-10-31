@@ -14,6 +14,14 @@ BACKUP_LIST=("https://gitlab.com/vertiv-co/its/embedded/cobra/cobra-dev.git" \
              "https://gitlab.com/vertiv-co/its/embedded/common/redfish-schemas.git" \
              "https://gitlab.com/vertiv-co/its/embedded/cobra/ipsl-home.git" \
              "https://gitlab.com/vertiv-co/its/embedded/cobra/ipsl-home.wiki.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/team-space/customersolutions.wiki.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/aci/meta-blueplate-apps.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/aci/meta-blueplate-platform.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/aci/blueplate-redfish.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/aci/blueplate-ipmi-handler.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/aci/aci-ipmi.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/aci/blueplate-redfish-advanced.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/aci/blueplate-peci.git" \
               )
 
 
