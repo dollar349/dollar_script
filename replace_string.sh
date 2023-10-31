@@ -5,5 +5,5 @@ if test $# != 2; then
    echo "invalid input"
    exit 1 
 fi 
-grep -Hnrl "$1" . | xargs -i sed -i s/${FIND_STRING}/${NEW_STRING}/g {}
+grep -Hnrl "$1" . | xargs -i sed -i "s|${FIND_STRING}|${NEW_STRING}|g" {}
 exit 0
