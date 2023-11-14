@@ -5,8 +5,12 @@ BACKUP_LIST=("https://gitlab.com/vertiv-co/its/embedded/cobra/cobra-dev.git" \
              "https://gitlab.com/vertiv-co/its/embedded/cobra/inc-dev.git" \
              "https://gitlab.com/vertiv-co/its/embedded/cobra/inc-home.git" \
              "https://gitlab.com/vertiv-co/its/embedded/cobra/inc-home.wiki.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/aci/blueplate-dev.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/aci/BluePlate.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/aci/BluePlate.wiki.git" \
              "https://gitlab.com/vertiv-co/its/developers/dowang-vertiv/obmc_qemu_static.git" \
              "https://gitlab.com/vertiv-co/its/embedded/aci/aci-ci-template.git" \
+             "https://gitlab.com/vertiv-co/its/embedded/aci/aci-ci-template.wiki.git" \
              "https://gitlab.com/vertiv-co/its/embedded/cobra/cobra-sip.git" \
              "https://gitlab.com/vertiv-co/its/embedded/cobra/inc-data-dictionary-read-only.git" \
              "https://gitlab.com/vertiv-co/its/embedded/cobra/cobra-redfish-sip-settings.git" \
