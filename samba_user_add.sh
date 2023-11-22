@@ -12,6 +12,7 @@ done
 user_home=$(bash -c "cd ~$(printf %q "${username}") 2>/dev/null && pwd")
 if test "$?" != "0";then
    echo "Invalid user"
+   exit 1
 fi
 
 sudo smbpasswd -a ${username}
