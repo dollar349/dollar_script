@@ -39,6 +39,12 @@ URL_LIST=("/redfish/v1/Systems/1" \
           "/redfish/v1/Managers/1/LldpService" \
           )
 
+if ! python3 -c "import PIL" &> /dev/null; then
+    echo "PIL is required, Please install by pip3"
+    echo "pip3 install pillow"
+    exit 1
+fi
+
 if test "$(ls *.png 2>/dev/null)" != ""; then
     echo "Delete all png files (y/n)? "
     read -p "y:delete, n: cancel : " ans

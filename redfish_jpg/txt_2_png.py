@@ -1,7 +1,12 @@
 #!/bin/python3
 
 import sys
-from PIL import Image, ImageDraw, ImageFont
+try:
+    from PIL import Image, ImageDraw, ImageFont
+except ModuleNotFoundError:
+    print("PIL is required, Please install by pip3")
+    print("pip3 install pillow")
+    exit()
 
 font_size = 12
 line_spacing = -2
