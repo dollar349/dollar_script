@@ -1,0 +1,9 @@
+[Unit]
+Description=Configure wake On LAN
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/ethtool -s enp3s0 wol g
+
+[Install]
+WantedBy=basic.target
