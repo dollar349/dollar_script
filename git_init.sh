@@ -1,6 +1,6 @@
 #!/bin/sh
 git config --global user.name “Dollar”
-git config --global user.email "Dollar.Wang@ecs.com.tw"
+git config --global user.email "dollar@acsgconsults.com"
 git config --global color.ui true
 git config --global alias.st status
 git config --global core.editor "vim"
