@@ -1,5 +1,6 @@
 #!/bin/sh
 #MIRRO_SERVER="10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.7.0"
+: '
 SERVER_LIST=("10.162.243.220:/var/www/html/oe-mirror/xilinx-yocto" \
               "10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.7.0" \
               "10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.7.0_yocto3.1" \
@@ -9,6 +10,12 @@ SERVER_LIST=("10.162.243.220:/var/www/html/oe-mirror/xilinx-yocto" \
               "10.162.243.220:/var/www/html/oe-mirror/cobra-xilinx-obmc2.11.0" \
               "10.162.243.143:/var/www/html/oe-mirror/obmcpost2.11.0" \
               )
+'
+SERVER_LIST=("192.188.88.226:/var/www/html/oe-mirror/VS_TI_Kirkstone" \
+             "192.188.88.226:/var/www/html/oe-mirror/VS_NXP_Kirkstone" \
+             "192.188.88.226:/var/www/html/oe-mirror/OCT_NXP_Mickledore" \
+             "192.188.88.226:/var/www/html/oe-mirror/TI_BSP" \
+             )
 MOUNT_FOLDER="tmp_mo"
 NEWFILE_FOLDER="new_files"
 if [[ -d $1 ]]; then
