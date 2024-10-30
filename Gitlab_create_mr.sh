@@ -70,7 +70,7 @@ fi
 
 
 ACCESS_TOKEN=""
-getVertivAccessToken()
+getGitLabAccessToken()
 {
     local git_credentials=""
     local token_tmp=""
@@ -104,7 +104,7 @@ getVertivAccessToken()
 
 function GetRepoID(){
     if test "${ACCESS_TOKEN}" = "";then
-        getVertivAccessToken
+        getGitLabAccessToken
     fi
     GIT_REPOSITORY_URL=${1%.git}".git"
     REPO_NAME=$(echo ${GIT_REPOSITORY_URL} | awk -F "/" '{print $NF}')
@@ -114,7 +114,7 @@ function GetRepoID(){
 }
 
 
-getVertivAccessToken
+getGitLabAccessToken
 
 # If given a repo URL
 re='^[0-9]+$'

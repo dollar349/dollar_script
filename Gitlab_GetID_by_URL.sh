@@ -8,7 +8,7 @@ print_help()
     echo "  Usage: $(basename $0) \${Gitlab project URL}"
 }
 
-getVertivAccessToken()
+getGitLabAccessToken()
 {
     local git_credentials=""
     local token_tmp=""
@@ -42,7 +42,7 @@ getVertivAccessToken()
 
 function GetRepoID(){
     if test "${ACCESS_TOKEN}" = "";then
-        getVertivAccessToken
+        getGitLabAccessToken
     fi
     GIT_REPOSITORY_URL=${1%.git}".git"
     REPO_NAME=$(echo ${GIT_REPOSITORY_URL} | awk -F "/" '{print $NF}')
@@ -58,7 +58,7 @@ if [[ ${1} =~ ${re} ]] ; then
 fi
 
 # Get access token
-getVertivAccessToken
+getGitLabAccessToken
 
 GIT_REPOSITORY_URL=${1%.git}".git"
 REPO_NAME=$(echo ${GIT_REPOSITORY_URL} | awk -F "/" '{print $NF}')

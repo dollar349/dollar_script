@@ -10,7 +10,7 @@ MACHINE_LIST="inc-ast2600evb inc-ipsl inc"
 
 API_V4_URL="https://gitlab.com/api/v4"
 ACCESS_TOKEN=""
-getVertivAccessToken()
+getGitLabAccessToken()
 {
     local git_credentials=""
     local token_tmp=""
@@ -43,7 +43,7 @@ getVertivAccessToken()
 }
 
 # Get access token
-getVertivAccessToken
+getGitLabAccessToken
 
 JSON_TMP_FILE=package.json
 DELETE_LIST=delete.json
