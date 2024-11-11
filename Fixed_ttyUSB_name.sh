@@ -12,7 +12,7 @@ print_help()
     echo "This script helps to create a specific name for a ttyUSB device."
     echo "  Usage:"
     echo "    * Create a name for a device:"
-    echo "       ./$(basename $0) ttyUSB0 My_Console" 
+    echo "       ./$(basename $0) [/dev/]ttyUSB0 My_Console" 
     echo "    * Check the current rules."
     echo "       ./$(basename $0) -c" 
     echo "    * Check the in-use device."
