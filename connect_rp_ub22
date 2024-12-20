@@ -1,0 +1,5 @@
+#!/bin/bash
+
+PORT=32022
+
+ssh -p ${PORT} dollar@dollarwang.synology.me
