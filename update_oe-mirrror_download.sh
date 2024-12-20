@@ -11,11 +11,14 @@ SERVER_LIST=("10.162.243.220:/var/www/html/oe-mirror/xilinx-yocto" \
               "10.162.243.143:/var/www/html/oe-mirror/obmcpost2.11.0" \
               )
 '
-SERVER_LIST=("192.188.88.226:/var/www/html/oe-mirror/VS_TI_Kirkstone" \
-             "192.188.88.226:/var/www/html/oe-mirror/VS_NXP_Kirkstone" \
-             "192.188.88.226:/var/www/html/oe-mirror/OCT_NXP_Mickledore" \
-             "192.188.88.226:/var/www/html/oe-mirror/TI_BSP" \
+SERVER_LIST=("192.168.88.226:/var/www/html/oe-mirror/VS_TI_Kirkstone" \
+             "192.168.88.226:/var/www/html/oe-mirror/VS_NXP_Kirkstone" \
+             "192.168.88.226:/var/www/html/oe-mirror/OCT_NXP_Mickledore" \
+             "192.168.88.226:/var/www/html/oe-mirror/TI_BSP" \
+             "192.168.88.226:/var/www/html/oe-mirror/GHMI_AM654" \
+             "192.168.88.226:/var/www/html/oe-mirror/TI_AM62P_Scarthgap"
              )
+
 MOUNT_FOLDER="tmp_mo"
 NEWFILE_FOLDER="new_files"
 if [[ -d $1 ]]; then
